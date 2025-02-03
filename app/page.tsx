@@ -1,101 +1,80 @@
 import Image from "next/image";
 
+const DATA = [
+  {
+    title: "Front Door Broken",
+    status: "🙂 Non Urgent",
+    isResolved: false,
+    createdAt: new Date(),
+  },
+  {
+    title: "Front Door Broken",
+    status: "⚡ Urgent",
+    isResolved: false,
+    createdAt: new Date(),
+  },
+  {
+    title: "Front Door Broken",
+    status: "🔥 Emergency",
+    isResolved: true,
+    createdAt: new Date(),
+  },
+  {
+    title: "Front Door Broken",
+    status: "🔨 Less Urgent",
+    isResolved: true,
+    createdAt: new Date(),
+  },
+  {
+    title: "Front Door Broken",
+    status: "⚡ Urgent",
+    isResolved: true,
+    createdAt: new Date(),
+  },
+];
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className="text-[20px] font-bold">Maintenance Request</div>
+      <div className="flex flex-shrink flex-row">
+        <div className="bg-white w-[90px] h-[90px] rounded-[10px] shadow-md flex flex-col items-center">
+          <div className="text-[36px] text-primary font-bold">2</div>
+          <div className="text-[9px]">Open Requests</div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="mx-[20px] bg-white w-[90px] h-[90px] rounded-[10px] shadow-md flex flex-col items-center">
+          <div className="text-[36px] text-primary font-bold">2</div>
+          <div className="text-[9px]">Urgent Requests</div>
+        </div>
+        <div className="bg-white w-[90px] h-[90px] rounded-[10px] shadow-md flex flex-col items-center px-[6px]">
+          <div className="text-[36px] text-primary font-bold">2</div>
+          <div className="text-[9px] text-center">
+            {" "}
+            Average Time (days) to resolve
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-[636px]">
+        {DATA.map((d: any) => (
+          <div className="bg-white flex flex-col w-full h-[87px] bg-white shadow-md mt-[20px] p-[16px] gap-[10px] rounded-[12px]">
+            <div className="flex flex-row flex-1 justify-between">
+              <div>{d.title}</div>
+              <div>11 Dec 2024</div>
+            </div>
+            <div className="flex flex-row flex-1 justify-between">
+              <div>{d.status}</div>
+              {d?.isResolved ? (
+                <div>{"Resolved"}</div>
+              ) : (
+                <div className="rounded-full bg-primary py-[3px] px-[8px] text-[12px] ">
+                  <span className="text-[white] font-normal">
+                    Mark as Resolved
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

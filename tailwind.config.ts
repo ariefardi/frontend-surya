@@ -13,6 +13,11 @@ export default {
         foreground: "var(--foreground)",
       },
     },
+    colors: {
+      primary: "#36A388",
+      emergency: "#D74B4B",
+      urgent: "#E3903F"
+    }
   },
   plugins: [],
 } satisfies Config;
