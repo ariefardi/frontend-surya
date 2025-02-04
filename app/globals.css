@@ -4,12 +4,12 @@
 
 :root {
   --background: #171717;
-  --foreground: #F8F8FF;
+  --foreground: #f8f8ff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background:#ededed;  
+    --background: #ededed;
     --foreground: #0a0a0a;
   }
 }
@@ -18,4 +18,43 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Wrapper agar bisa mengatur posisi ikon */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Style untuk Select */
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+
+  cursor: pointer;
+
+  /* Tambahkan padding agar panah tidak menutupi teks */
+  padding-right: 40px;
+}
+
+/* Menghilangkan arrow bawaan di IE */
+.custom-select::-ms-expand {
+  display: none;
+}
+
+/* SVG sebagai ikon custom */
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 16px; /* Sesuaikan dengan padding select */
+  transform: translateY(-50%);
+  width: 14px;
+  height: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23A1AFC3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none; /* Agar klik tetap berfungsi */
 }
