@@ -6,50 +6,43 @@ import React, { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { CreateMaintenanceProps, MaintenanceProps } from "../../interfaces/maintenance.interface";
 import { GET_ONE_REQUEST, MUTATION_CREATE_REQUEST } from "../../services/maintenance.service";
-
+import { useRouter } from "next/navigation";
 const useRequestHooks = () => {
   const { id } = useParams(); // Get ID from URL
-  // const router = useRouter();
+  const router = useRouter();
   const isEdit = id !== "new"; // "new" means create, otherwise edit
   const [formData, setFormData] = useState<CreateMaintenanceProps>({
     title: "",
     description: "",
-    status: "",
+    status: "emergency",
     isResolved: false,
   });
-  const [createRequest, { loading: loadingCrate, error: errorCrate, data: dataCrate }] =
-    useMutation(MUTATION_CREATE_REQUEST);
-  const [updateRequest, { loading: loadingUpdate, error: errorUpdate, data: dataUpdate }] =
-    useMutation(MUTATION_CREATE_REQUEST);
+  const [createRequest, _] = useMutation(MUTATION_CREATE_REQUEST);
+  const [updateRequest, __] = useMutation(MUTATION_CREATE_REQUEST);
 
-  const {
-    loading: loadingOne,
-    error: errorOne,
-    data: dataOne,
-  } = useQuery<{ request: MaintenanceProps }>(GET_ONE_REQUEST, {
+  const getOneRequest = useQuery<{ request: MaintenanceProps }>(GET_ONE_REQUEST, {
     variables: { id: Number(id) },
-    skip: !isEdit, // Skip if `isEdit` is false
+    skip: !isEdit,
   });
 
   const [errors, setErrors] = useState<{ title?: string; status?: string }>({});
 
-  // Set formData when editing an existing request
   useEffect(() => {
-    if (isEdit && dataOne?.request) {
+    if (isEdit && getOneRequest.data?.request) {
       setFormData((prev) => ({
         ...prev,
-        ...dataOne.request,
-        status: dataOne.request.status || "not_urgent",
+        ...getOneRequest?.data?.request,
+        status: getOneRequest?.data?.request.status || "not_urgent",
       }));
     }
-  }, [dataOne, isEdit]);
+  }, [getOneRequest.data, isEdit]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Hapus error ketika user mulai mengetik
+
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
@@ -64,66 +57,60 @@ const useRequestHooks = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true jika tidak ada error
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return; // Stop submit jika ada error
-    }
-    console.log("form", formData, isEdit);
+    if (!validateForm()) return;
 
-    if (!isEdit) {
-      handleCreate(formData);
-    } else {
-      handleUpdate();
+    isEdit ? handleUpdate() : handleCreate(formData);
+  };
+
+  const showConfirmation = async (title: string, action: () => Promise<void>) => {
+    const result = await Swal.fire({
+      title,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, proceed!",
+    });
+
+    if (result.isConfirmed) {
+      await action();
     }
   };
+
   const handleUpdate = useCallback(async () => {
     try {
-      Swal.fire({
-        title: "Are you sure want to update?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, update it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          await updateRequest({
-            variables: {
-              id: id,
-              title: formData.title,
-              status: formData.status,
-              description: formData.description,
-              isResolved: formData.isResolved || false,
-            },
-          });
+      await showConfirmation("Are you sure you want to update?", async () => {
+        await updateRequest({
+          variables: {
+            id,
+            title: formData.title,
+            status: formData.status,
+            description: formData.description,
+            isResolved: formData.isResolved || false,
+          },
+        });
 
-          await Swal.fire({
-            title: "Resolved!",
-            text: "Your task has been updated.",
-            icon: "success",
-          });
-          // router.push("/");
-          window.location.href = "/";
-        }
+        await Swal.fire({
+          title: "Success!",
+          text: "Your task has been updated.",
+          icon: "success",
+        });
+
+        router.push("/");
       });
     } catch (error) {}
-  }, [formData, id]);
-  const handleCreate = useCallback(async (formData: CreateMaintenanceProps) => {
-    try {
-      Swal.fire({
-        title: "Are you sure want to create?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes,  it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
+  }, [formData, id, updateRequest, router]);
+
+  const handleCreate = useCallback(
+    async (formData: CreateMaintenanceProps) => {
+      try {
+        await showConfirmation("Are you sure you want to create?", async () => {
           await createRequest({
             variables: {
               title: formData.title,
@@ -134,16 +121,18 @@ const useRequestHooks = () => {
           });
 
           await Swal.fire({
-            title: "Resolved!",
+            title: "Success!",
             text: "Your task has been created.",
             icon: "success",
           });
-          // router.push("/");
-          window.location.href = "/";
-        }
-      });
-    } catch (error) {}
-  }, []);
+
+          router.push("/");
+        });
+      } catch (error) {}
+    },
+    [createRequest]
+  );
+
   return { formData, errors, setFormData, handleChange, handleSubmit };
 };
 

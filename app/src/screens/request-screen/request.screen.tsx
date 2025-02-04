@@ -5,15 +5,7 @@ import { urgencyOptions } from "../../constant";
 import useRequestHooks from "./request.hook";
 const RequestScreen = () => {
   const { formData, errors, setFormData, handleChange, handleSubmit } = useRequestHooks();
-  const [hydrated, setHydrated] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!hydrated) {
-      setHydrated(true);
-    }
-  }, []);
-
-  if (!hydrated) return <></>;
   return (
     <div className="relative flex justify-center items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="w-[447px] flex flex-col items-center">

@@ -41,7 +41,7 @@ const ListMaintenanceComponent = (props: ListMaintenanceComponentProps) => {
                     e.stopPropagation();
                     props.resolveRequest(d);
                   }}
-                  className="rounded-full bg-primary py-[3px] px-[8px] text-[12px] cursor-pointer z-50"
+                  className="rounded-full bg-primary py-[3px] px-[8px] text-[12px] cursor-pointer"
                 >
                   <span className="text-[white] font-normal">Mark as Resolved</span>
                 </div>

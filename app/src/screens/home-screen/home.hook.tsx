@@ -1,14 +1,13 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import Swal from "sweetalert2";
-import useListMaintenanceHooks from "../../components/list-maintenance/list-maintenance.hook";
 import { MaintenanceProps } from "../../interfaces/maintenance.interface";
 import {
   AVERAGE_RESOLUTION_TIME,
   GET_ALL_REQUESTS,
   MUTATION_UPDATE_REQUEST,
   OPEN_REQUEST,
-  OPEN_REQUEST_URGENT,
+  OPEN_REQUEST_URGENT
 } from "../../services/maintenance.service";
 
 const useHomeHooks = () => {
