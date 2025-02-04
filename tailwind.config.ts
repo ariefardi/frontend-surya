@@ -16,7 +16,10 @@ export default {
     colors: {
       primary: "#36A388",
       emergency: "#D74B4B",
-      urgent: "#E3903F"
+      urgent: "#E3903F",
+      non_urgent: "#5CC153",
+      less_urgent: "#157AD8",
+      inactive: "#A1AFC3"
     }
   },
   plugins: [],
