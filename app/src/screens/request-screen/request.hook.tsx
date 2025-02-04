@@ -1,16 +1,17 @@
 "use client";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "next/navigation";
-// import { useRouter } from "next/router";
+
 import React, { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { CreateMaintenanceProps, MaintenanceProps } from "../../interfaces/maintenance.interface";
 import { GET_ONE_REQUEST, MUTATION_CREATE_REQUEST } from "../../services/maintenance.service";
 import { useRouter } from "next/navigation";
+
 const useRequestHooks = () => {
-  const { id } = useParams(); // Get ID from URL
+  const { id } = useParams();
   const router = useRouter();
-  const isEdit = id !== "new"; // "new" means create, otherwise edit
+  const isEdit = id !== "new";
   const [formData, setFormData] = useState<CreateMaintenanceProps>({
     title: "",
     description: "",
@@ -133,7 +134,11 @@ const useRequestHooks = () => {
     [createRequest]
   );
 
-  return { formData, errors, setFormData, handleChange, handleSubmit };
+  const handleBack = useCallback(() => {
+    router.back();
+  }, []);
+
+  return { formData, errors, setFormData, handleChange, handleSubmit, handleBack };
 };
 
 export default useRequestHooks;

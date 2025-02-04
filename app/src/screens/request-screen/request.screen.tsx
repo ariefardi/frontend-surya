@@ -1,15 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
 import { urgencyOptions } from "../../constant";
+import { ArrowIcon } from "../../icons/arrow.icon";
 
 import useRequestHooks from "./request.hook";
 const RequestScreen = () => {
-  const { formData, errors, setFormData, handleChange, handleSubmit } = useRequestHooks();
+  const { formData, errors, setFormData, handleChange, handleSubmit, handleBack } =
+    useRequestHooks();
 
   return (
     <div className="relative flex justify-center items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="w-[447px] flex flex-col items-center">
-        <div className="text-[20px] font-bold text-center mb-[22px]">Maintenance Request</div>
+        <div className="w-full relative">
+          <div onClick={handleBack} className="absolute left-12 top-2 cursor-pointer">
+            <ArrowIcon />
+          </div>
+          <div className="text-[20px] font-bold text-center mb-[22px]">Maintenance Request</div>
+        </div>
+
         <form onSubmit={handleSubmit} className="w-[447px]">
           {/* Urgency Dropdown */}
           <div className="mb-[25px]">

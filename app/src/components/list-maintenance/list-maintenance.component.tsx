@@ -1,5 +1,6 @@
 "use client";
 import { classStatus } from "@/app/src/constant";
+import { PlusIcon } from "../../icons/plus.icon";
 import { getAllRequestProps, MaintenanceProps } from "../../interfaces/maintenance.interface";
 import { formateDate } from "../../lib/formatDate";
 
@@ -55,21 +56,7 @@ const ListMaintenanceComponent = (props: ListMaintenanceComponentProps) => {
           onClick={handleCreate}
           className="fixed bottom-4 right-[calc(50%-348px)] bg-primary text-white p-3 rounded-full shadow-lg hover:bg-blue-700"
         >
-          <svg
-            width="21"
-            height="20"
-            viewBox="0 0 21 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.5 10H10.5M19.5 10H10.5M10.5 10V1M10.5 10V19"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <PlusIcon />
         </button>
       </div>
     </>

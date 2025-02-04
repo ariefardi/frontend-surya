@@ -7,15 +7,22 @@ import {
   GET_ALL_REQUESTS,
   MUTATION_UPDATE_REQUEST,
   OPEN_REQUEST,
-  OPEN_REQUEST_URGENT
+  OPEN_REQUEST_URGENT,
 } from "../../services/maintenance.service";
 
 const useHomeHooks = () => {
-  const getAllRequest = useQuery<{ requests: MaintenanceProps[] }>(GET_ALL_REQUESTS);
-  const openRequestQuery = useQuery<{ openRequests: number }>(OPEN_REQUEST);
-  const urgentRequestQuery = useQuery<{ openUrgentRequests: number }>(OPEN_REQUEST_URGENT);
+  const getAllRequest = useQuery<{ requests: MaintenanceProps[] }>(GET_ALL_REQUESTS, {
+    fetchPolicy: "network-only",
+  });
+  const openRequestQuery = useQuery<{ openRequests: number }>(OPEN_REQUEST, {
+    fetchPolicy: "network-only",
+  });
+  const urgentRequestQuery = useQuery<{ openUrgentRequests: number }>(OPEN_REQUEST_URGENT, {
+    fetchPolicy: "network-only",
+  });
   const averageResolutionQuery = useQuery<{ averageResolutionTime: number }>(
-    AVERAGE_RESOLUTION_TIME
+    AVERAGE_RESOLUTION_TIME,
+    { fetchPolicy: "network-only" }
   );
   const [updateRequest, _] = useMutation(MUTATION_UPDATE_REQUEST);
 
