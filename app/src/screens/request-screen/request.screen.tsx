@@ -22,7 +22,6 @@ const RequestScreen = () => {
           <div className="mb-[25px]">
             <label className="block text-xs text-inactive font-medium mb-2">Urgency *</label>
             <div className="select-wrapper">
-              {/* hel{formData.status} */}
               <select
                 name="status"
                 value={formData.status}

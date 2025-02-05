@@ -5,7 +5,6 @@ import DashboardMaintenanceComponent from "@/app/src/components/dashboard-mainte
 import { useEffect } from "react";
 import useHomeHooks from "./home.hook";
 const HomeScreen = () => {
-  // const [hydrated, setHydrated] = useState<boolean>(false);
   const {
     getAllRequest,
     openRequestQuery,
@@ -13,14 +12,7 @@ const HomeScreen = () => {
     averageResolutionQuery,
     resolveRequest,
   } = useHomeHooks();
-  useEffect(() => {
-    console.log("update");
-  }, []);
-  // useEffect(() => {
-  //   setHydrated(true);
-  // }, []);
 
-  // if (!hydrated) return <></>;
   return (
     <div className="relative flex justify-center items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="w-[697px] flex flex-col items-center just">

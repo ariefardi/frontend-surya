@@ -5,7 +5,11 @@ import { useParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { CreateMaintenanceProps, MaintenanceProps } from "../../interfaces/maintenance.interface";
-import { GET_ONE_REQUEST, MUTATION_CREATE_REQUEST } from "../../services/maintenance.service";
+import {
+  GET_ONE_REQUEST,
+  MUTATION_CREATE_REQUEST,
+  MUTATION_UPDATE_REQUEST,
+} from "../../services/maintenance.service";
 import { useRouter } from "next/navigation";
 
 const useRequestHooks = () => {
@@ -19,7 +23,7 @@ const useRequestHooks = () => {
     isResolved: false,
   });
   const [createRequest, _] = useMutation(MUTATION_CREATE_REQUEST);
-  const [updateRequest, __] = useMutation(MUTATION_CREATE_REQUEST);
+  const [updateRequest, __] = useMutation(MUTATION_UPDATE_REQUEST);
 
   const getOneRequest = useQuery<{ request: MaintenanceProps }>(GET_ONE_REQUEST, {
     variables: { id: Number(id) },
@@ -65,6 +69,7 @@ const useRequestHooks = () => {
     e.preventDefault();
 
     if (!validateForm()) return;
+    console.log("v", isEdit);
 
     isEdit ? handleUpdate() : handleCreate(formData);
   };
@@ -89,7 +94,7 @@ const useRequestHooks = () => {
       await showConfirmation("Are you sure you want to update?", async () => {
         await updateRequest({
           variables: {
-            id,
+            id: Number(id),
             title: formData.title,
             status: formData.status,
             description: formData.description,

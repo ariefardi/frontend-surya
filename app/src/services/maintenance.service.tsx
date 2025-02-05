@@ -49,20 +49,20 @@ export const MUTATION_UPDATE_REQUEST = gql`
     $title: String
     $description: String
     $isResolved: Boolean
-    $statusDisplay: String
+    $status: String
   ) {
     updateRequest(
       id: $id
       title: $title
       description: $description
       isResolved: $isResolved
-      statusDisplay: $statusDisplay
+      status: $status
     ) {
       id
       title
       description
       isResolved
-      statusDisplay
+      status
     }
   }
 `;
